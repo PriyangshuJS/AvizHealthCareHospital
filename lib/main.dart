@@ -1,4 +1,5 @@
 import 'package:avizhealthcarehospital/screen/Analytics.dart';
+import 'package:avizhealthcarehospital/screen/aplicationForm.dart';
 import 'package:avizhealthcarehospital/screen/main_page.dart';
 import 'package:avizhealthcarehospital/screen/userActivity.dart';
 import 'package:avizhealthcarehospital/screen/user_health.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
         useMaterial3: true,
       ),
-      home: UserHealth(),
+      home: AplicationForm(),
     );
   }
 }
