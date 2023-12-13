@@ -1,56 +1,56 @@
 import 'package:flutter/material.dart';
 
 class AppointmentCard extends StatelessWidget {
-  const AppointmentCard({Key? key}) : super(key: key);
+  final Map<String, dynamic> data;
+
+  AppointmentCard({
+    required this.data,
+  });
 
   @override
   Widget build(BuildContext context) {
-    double cardHeight = MediaQuery.of(context).size.height / 8;
+    String Cname = data["cname"] ?? "User";
+    String PDuration = data["duration"] ?? "Unknown";
+    String Plan = data["plan"] ?? "Unknown";
 
     return Padding(
       padding: const EdgeInsets.all(10),
       child: Container(
         decoration: ShapeDecoration(
           color: Colors.white,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
         ),
         child: ListTile(
           leading: CircleAvatar(
-            radius:
-                cardHeight * 0.4, // Adjust the radius based on the card height
-          ),
+              // Adjust the radius based on the card height
+              ),
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Akruti Agarwal',
+                Cname,
                 style: TextStyle(
                   color: Color(0xFF202020),
-                  fontSize: cardHeight *
-                      0.14, // Adjust the font size based on the card height
-                  fontFamily: 'Poppins',
-                  fontWeight: FontWeight.w500,
+                  // Adjust the font size based on the card height
                 ),
               ),
-              SizedBox(height: cardHeight * 0.05),
+              SizedBox(height: 10), // Adjust as needed
               Text(
-                'General care plan',
+                Plan,
                 style: TextStyle(
                   color: Color(0xFFF83D5B),
-                  fontSize: cardHeight * 0.1,
-                  fontFamily: 'Poppins',
-                  fontWeight: FontWeight.w500,
+                  // Adjust font size
                 ),
-              )
+              ),
             ],
           ),
           subtitle: Text(
-            'Duration: 2 months',
+            PDuration,
             style: TextStyle(
               color: Color(0x99202020),
-              fontSize: cardHeight * 0.08,
-              fontFamily: 'Poppins',
-              fontWeight: FontWeight.w500,
+              // Adjust font size
             ),
           ),
           trailing: IconButton(

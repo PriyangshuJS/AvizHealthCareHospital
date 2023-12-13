@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
 
-class ReviewCard extends StatelessWidget {
-  const ReviewCard({super.key});
+class ReviewCard extends StatefulWidget {
+  final Map<String, dynamic> data;
+  ReviewCard({
+    super.key,
+    required this.data,
+  });
 
   @override
+  State<ReviewCard> createState() => _ReviewCardState();
+}
+
+class _ReviewCardState extends State<ReviewCard> {
+  @override
   Widget build(BuildContext context) {
+    String Cname = widget.data["cname"] ?? "User";
+    String comment = widget.data["comment"] ?? "Unknown";
     return Opacity(
       opacity: 0.70,
       child: Container(
@@ -29,7 +40,7 @@ class ReviewCard extends StatelessWidget {
               contentPadding: EdgeInsets.all(0), // Set contentPadding to 0
               leading: CircleAvatar(),
               title: Text(
-                'Patient name',
+                Cname,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 14,
@@ -40,11 +51,7 @@ class ReviewCard extends StatelessWidget {
               ),
 
               subtitle: Text(
-                'Lorem ipsum dolor sit amet, consur adipiscing elit. consectetur adiping elit. Lorem ipsum dolor...'
-                        .split(' ')
-                        .take(5)
-                        .join(' ') +
-                    '...',
+                comment.split(' ').take(5).join(' ') + '...',
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 10,

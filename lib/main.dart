@@ -1,14 +1,10 @@
-import 'package:avizhealthcarehospital/screen/Analytics.dart';
-import 'package:avizhealthcarehospital/screen/aplicationForm.dart';
-import 'package:avizhealthcarehospital/screen/main_page.dart';
-import 'package:avizhealthcarehospital/screen/userActivity.dart';
-import 'package:avizhealthcarehospital/screen/user_health.dart';
-import 'package:avizhealthcarehospital/widgets/appointmentCard.dart';
+import 'package:avizhealthcarehospital/screen/testScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-import 'screen/Appointment.dart';
-
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -25,7 +21,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
         useMaterial3: true,
       ),
-      home: AplicationForm(),
+      home: TestScreen(),
     );
   }
 }
