@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/newAppointmentCards.dart';
+
 class Appointments extends StatelessWidget {
   const Appointments({Key? key}) : super(key: key);
 
@@ -52,14 +54,14 @@ class Appointments extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 20),
+        //const SizedBox(height: 20),
         SizedBox(
           height: MediaQuery.of(context).size.height / 4,
           child: ListView.builder(
             itemCount: itemCount,
             itemBuilder: (context, index) {
               if (index < itemCount) {
-                //return AppointmentCard();
+                return NewAppointment();
               } else {
                 return SizedBox.shrink();
               }
