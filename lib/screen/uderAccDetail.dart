@@ -143,7 +143,7 @@ class UserAccDetail extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20),
-            AddressCard(),
+            //AddressCard(),
           ],
         ),
       )),

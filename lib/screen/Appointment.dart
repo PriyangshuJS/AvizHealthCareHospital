@@ -1,6 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import '../widgets/newAppointmentCards.dart';
+import '../widgets/acceptedAppointment.dart';
 
 class Appointments extends StatelessWidget {
   const Appointments({Key? key}) : super(key: key);
@@ -26,9 +27,9 @@ class Appointments extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              buildAppointmentSection(context, 'New Appointments', 3),
-              buildAppointmentSection(context, 'Ongoing Appointments', 4),
-              buildAppointmentSection(context, 'Previous Appointments', 4),
+              buildAppointmentSection(context, 'New Appointments'),
+              buildAppointmentSection(context, 'Ongoing Appointments'),
+              buildAppointmentSection(context, 'Previous Appointments'),
             ],
           ),
         ),
@@ -36,8 +37,7 @@ class Appointments extends StatelessWidget {
     );
   }
 
-  Widget buildAppointmentSection(
-      BuildContext context, String title, int itemCount) {
+  Widget buildAppointmentSection(BuildContext context, String title) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -54,20 +54,38 @@ class Appointments extends StatelessWidget {
             ),
           ),
         ),
-        //const SizedBox(height: 20),
         SizedBox(
           height: MediaQuery.of(context).size.height / 4,
-          child: ListView.builder(
-            itemCount: itemCount,
-            itemBuilder: (context, index) {
-              if (index < itemCount) {
-                return NewAppointment();
+          child: FutureBuilder<QuerySnapshot>(
+            future: FirebaseFirestore.instance.collection("AppDetail").get(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  List<DocumentSnapshot> appointments = snapshot.data!.docs;
+                  return ListView.builder(
+                    itemCount: appointments.length,
+                    itemBuilder: (context, index) {
+                      if (title == 'New Appointments') {
+                        return NewAppointment(
+                          data: appointments[index],
+                        );
+                      } else {
+                        return AcceptedAppointment(
+                          data: appointments[index],
+                        );
+                      }
+                    },
+                  );
+                }
               } else {
-                return SizedBox.shrink();
+                return CircularProgressIndicator();
               }
             },
           ),
         ),
+        SizedBox(height: 20),
       ],
     );
   }

@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../screen/AppointmentDetail.dart';
+
 class NewAppointment extends StatefulWidget {
-  const NewAppointment({
-    Key? key,
-  }) : super(key: key);
+  final DocumentSnapshot data;
+  const NewAppointment({Key? key, required this.data});
 
   @override
   State<NewAppointment> createState() => _NewAppointmentState();
@@ -24,7 +26,7 @@ class _NewAppointmentState extends State<NewAppointment> {
         },
         child: AnimatedContainer(
           duration: Duration(milliseconds: 300),
-          height: isExpanded ? 120 : 80, // Adjust as needed
+          height: isExpanded ? 120 : 80,
           decoration: ShapeDecoration(
             color: Colors.white,
             shape: RoundedRectangleBorder(
@@ -37,9 +39,7 @@ class _NewAppointmentState extends State<NewAppointment> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: CircleAvatar(
-                    // Adjust the radius based on the card height
-                    ),
+                child: CircleAvatar(),
               ),
               Expanded(
                 child: Padding(
@@ -49,24 +49,21 @@ class _NewAppointmentState extends State<NewAppointment> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "User",
+                        widget.data["pname"] ?? "Unkown",
                         style: TextStyle(
                           color: Color(0xFF202020),
-                          // Adjust the font size based on the card height
                         ),
                       ),
                       Text(
-                        "General",
+                        widget.data["visit"] ?? "Unkown",
                         style: TextStyle(
                           color: Color(0xFFF83D5B),
-                          // Adjust font size
                         ),
                       ),
                       Text(
-                        "2 months",
+                        widget.data["duration"] ?? "Unkown",
                         style: TextStyle(
                           color: Color(0x99202020),
-                          // Adjust font size
                         ),
                       ),
                     ],
@@ -79,7 +76,6 @@ class _NewAppointmentState extends State<NewAppointment> {
                       children: [
                         IconButton(
                           onPressed: () {
-                            // Implement approve logic here
                             print("Approved");
                           },
                           icon: Icon(
@@ -89,7 +85,6 @@ class _NewAppointmentState extends State<NewAppointment> {
                         ),
                         IconButton(
                           onPressed: () {
-                            // Implement decline logic here
                             print("Declined");
                           },
                           icon: Icon(
@@ -100,7 +95,12 @@ class _NewAppointmentState extends State<NewAppointment> {
                       ],
                     )
                   : IconButton(
-                      onPressed: null,
+                      onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AppointmentDetail(
+                                    currentPname: widget.data["pname"],
+                                  ))),
                       icon: Icon(
                         Icons.arrow_right,
                         color: Color(0xFFF83D5B),
